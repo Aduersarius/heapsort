@@ -1,0 +1,78 @@
+#include <iostream>
+#include <sstream>
+using namespace std;
+
+bool read(int *a, int len) {
+	string line;
+	getline(cin, line);
+	istringstream stream(line);
+	for (unsigned int i = 0; i < len; ++i) {
+		if (!(stream >> a[i])) {
+			return false;
+		}
+	}
+	return true;
+}
+int c;
+void heapsort(int *a, int n) {
+	
+	while (1)
+	{
+		int b = 0;
+		for (int i = 0; i < n; ++i)
+		{
+			if (i * 2 + 2 + c < n)
+			{
+				if (a[i + c] > a[i * 2 + 1 + c] || a[i + c] > a[i * 2 + 2 + c])
+				{
+					if (a[i * 2 + 1 + c] < a[i * 2 + 2 + c])
+					{
+						swap(a[i + c], a[i * 2 + 1 + c]);
+						b = 1;
+					}
+					else if (a[i * 2 + 2 + c] < a[i * 2 + 1 + c])
+					{
+						swap(a[i + c], a[i * 2 + 2 + c]);
+						b = 1;
+					}
+				}
+			}
+			else if (i * 2 + 1 + c < n)
+			{
+				if (a[i + c] > a[i * 2 + 1 + c])
+				{
+					swap(a[i + c], a[i * 2 + 1 + c]);
+					b = 1;
+				}
+			}
+		}
+		if (!b) c++;
+		if (c + 2 == n)
+			break;
+	}
+}
+
+
+int main() {
+	int len; string line, o;
+	getline(cin, o);
+	istringstream stream(o);
+	if (!(stream >> len || len > 0)) {
+		cout << "An error has occuried while reading input data.";
+		return 0;
+	}
+	int *a = new int[len];
+	read(a, len);
+	for (int i = 0; i < len; i++) {
+
+		if (a[i] < 0) {
+
+			cout << "An error has occuried while reading input data.";
+
+			return 0;
+		}
+	}
+	heapsort(a, len);
+	for (int i = 0; i < len; i++) { cout << a[i] << ' '; }
+	return 0;
+}
